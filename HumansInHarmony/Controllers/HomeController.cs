@@ -15,6 +15,12 @@ namespace HumansInHarmony.Controllers
             return View();
         }
 
+        public IActionResult HomePage()
+        {
+            SongInfo song = ItunesDAL.FindSong();
+            return View(song);
+        }
+
         public IActionResult Privacy()
         {
             return View();
