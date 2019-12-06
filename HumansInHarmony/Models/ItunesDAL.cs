@@ -8,11 +8,10 @@ namespace HumansInHarmony.Models
     public class ItunesDAL
     {
 
-        public static SongInfo FindSong()
+        public static SongInfo FindSong(int arrayNumber)
         {
-            Random rnd = new Random();
-            int songId = SongsArray.Songs[rnd.Next(0, 24)];
-
+            
+            string sondId = SongsArray.Songs[arrayNumber];
             HttpWebRequest request = WebRequest.CreateHttp($"https://itunes.apple.com/search?term={songId}");
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
