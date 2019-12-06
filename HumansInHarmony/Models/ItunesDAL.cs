@@ -26,5 +26,21 @@ namespace HumansInHarmony.Models
 
             return song;
         }
+
+        public static SongInfo SaveSong(string Id)
+        {
+            HttpWebRequest request = WebRequest.CreateHttp($"https://itunes.apple.com/search?term={Id}");
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            StreamReader rd = new StreamReader(response.GetResponseStream());
+
+            string APIText = rd.ReadToEnd();
+
+            JToken token = JToken.Parse(APIText);
+
+            SongInfo song = new SongInfo(token);
+
+            return song;
+        }
     }
 }

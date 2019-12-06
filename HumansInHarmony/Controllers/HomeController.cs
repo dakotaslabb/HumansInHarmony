@@ -33,18 +33,20 @@ namespace HumansInHarmony.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
-        public IActionResult Result(User u)
+        public IActionResult LikeSong(string SongId)
         {
-           // ViewBag.Name = u.Email;
-            db.Add(u);
-            db.SaveChanges();
-            return View(u);
+            SongInfo song = ItunesDAL.SaveSong(SongId);
+            Users.LikedSongs.Add(song);
+            DB.Save();
+            return RedirectToAction("HomePage");
+        }
+        public IActionResult DislikeSong(string SongId)
+        {
+            SongInfo song = ItunesDAL.SaveSong(SongId);
+            Users.DislikedSongs.Add(song);
+            DB.Save();
+            return RedirectToAction("HomePage");
         }
 
-        public IActionResult Result()
-        {
-            return View();
-        }
     }
 }
