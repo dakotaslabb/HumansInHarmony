@@ -10,6 +10,7 @@ namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
+        public SongContext db = new SongContext();
         public IActionResult Index()
         {
             return View();
@@ -30,6 +31,20 @@ namespace HumansInHarmony.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult Result(User u)
+        {
+           // ViewBag.Name = u.Email;
+            db.Add(u);
+            db.SaveChanges();
+            return View(u);
+        }
+
+        public IActionResult Result()
+        {
+            return View();
         }
     }
 }
