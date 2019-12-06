@@ -10,6 +10,7 @@ namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
+        public SongContext db = new SongContext();
         public IActionResult Index()
         {
             return View();
