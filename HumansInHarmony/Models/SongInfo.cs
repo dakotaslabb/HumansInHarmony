@@ -6,15 +6,13 @@ namespace HumansInHarmony.Models
 {
     public class SongInfo
     {
-
+        [Key]
+        public string TrackId { get; set; }
         public string ArtistName { get; set; }
         public string CollectionName { get; set; }
         public string TrackName { get; set; }
         public string PreviewUrl { get; set; }
         public string ArtworkUrl100 { get; set; }
-
-        [Key]
-        public string TrackId { get; set; }
 
         public SongInfo()
         {

@@ -2,21 +2,19 @@
 <a asp-action="HomePage">Random Song</a>
 
 @model HumansInHarmony.Models.User
-<form method="post" asp-action="Result">
-    <p>Name:</p>
+<form method="post" asp-action="Register">
+
     <label asp-for="Name" class="control-label"></label>
     <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
 
-    <p>Email:</p>
-
     <label asp-for="Email" class="control-label"></label>
     <input asp-for="Email" class="form-control" />
     <span asp-validation-for="Email" class="text-danger"></span>
-    @*<input type="text" name="UserName" />*@
 
-    <p>Password:</p>
-    <input type="password" name="Password" />
-
+    <label asp-for="Password" class="control-label"></label>
+    <input asp-for="Password" class="form-control" />
+    <span asp-validation-for="Password" class="text-danger"></span>
+    <br />
     <input type="submit" />
 </form>

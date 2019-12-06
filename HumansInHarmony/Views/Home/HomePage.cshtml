@@ -43,10 +43,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a><br />r
-    <a asp-action="HomePage">Random Song</a>
-    <a asp-action="LikeSong">Like Song</a>|
-    <a asp-action="HomePage">Skip Song</a>|
-    <a asp-action="DislikeSong">Dislike Song</a>
+    @Html.ActionLink("Like", "LikeSong", new { id = Model.TrackId }) |
+    @Html.ActionLink("Dislike", "DislikeSong", new { id = Model.TrackId }) |
 </div>
