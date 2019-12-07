@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using HumansInHarmony.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
+        public User currentUser;
         public readonly SongContext _context = new SongContext();
         public SongContext db = new SongContext();
         public IActionResult Index()
@@ -16,12 +18,8 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult HomePage()
         {
-            for (int i = 0; i < SongsArray.Songs.Length; i++)
-            {
-            SongInfo song = ItunesDAL.FindSong(i);
+            List<SongInfo> song = ItunesDAL.FindSong();
             return View(song);
-            }
-            return View();
         }
 
         public IActionResult Privacy()
@@ -36,12 +34,13 @@ namespace HumansInHarmony.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(User u)
+        public IActionResult Register(User FormUser)
         {
-            TempData["UserName"] = u.Email;
-            db.Add(u);
+            currentUser = FormUser;
+            TempData["User"] = FormUser.Name;
+            db.Add(FormUser);
             db.SaveChanges();
-            return View(u);
+            return View(FormUser);
         }
 
         public IActionResult Register()
@@ -65,8 +64,8 @@ namespace HumansInHarmony.Controllers
             }
             else if (FormUser.Password == dbu.Password)
             {
-                TempData["UserName"] = FormUser.Email;
-                ViewBag.Name = FormUser.Email;
+                currentUser = FormUser;
+                TempData["User"] = FormUser.Name;
                 return RedirectToAction("HomePage");
             }
             else
@@ -81,17 +80,16 @@ namespace HumansInHarmony.Controllers
         }
         public IActionResult LikeSong(string SongId)
         {
-            User u = new User();
+            
             SongInfo song = ItunesDAL.SaveSong(SongId);
-            u.Likes.Add(song);
+            currentUser.Likes.Add(song);
             db.SaveChanges();
             return RedirectToAction("HomePage");
         }
         public IActionResult DislikeSong(string SongId)
         {
-            User u = new User();
             SongInfo song = ItunesDAL.SaveSong(SongId);
-            u.Dislikes.Add(song);
+            currentUser.Dislikes.Add(song);
             db.SaveChanges();
             return RedirectToAction("HomePage");
         }
