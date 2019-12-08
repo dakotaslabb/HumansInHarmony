@@ -9,7 +9,7 @@ namespace HumansInHarmony.Models
     public class ItunesDAL
     {
 
-        public static List<SongInfo> FindSong()
+        public static List<SongInfo> GetSongList()
         {
             List<SongInfo> songList = new List<SongInfo>();
             foreach (var item in SongsArray.Songs)

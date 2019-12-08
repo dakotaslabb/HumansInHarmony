@@ -1,16 +1,24 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using HumansInHarmony.Models;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using HumansInHarmony.Models;
 
 namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
-        public User currentUser;
-        public readonly SongContext _context = new SongContext();
+        public User currentUser = new User();
         public SongContext db = new SongContext();
+        private SongContext _context;
+        public HomeController(SongContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
@@ -18,7 +26,7 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult HomePage()
         {
-            List<SongInfo> song = ItunesDAL.FindSong();
+            List<SongInfo> song = ItunesDAL.GetSongList();
             return View(song);
         }
 
@@ -52,27 +60,44 @@ namespace HumansInHarmony.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult UserLogin(User FormUser)
-        {
-            User dbu = _context.User.ToList().Find(u => u.Email == FormUser.Email);
 
-            if (dbu == null)
+        [HttpPost]  
+        public ActionResult UserLogin(User user)
+        {
+            var account = _context.User.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
+            if (account != null)
             {
-                ViewBag.Error = "Invalide Email or Password";
-                return View();
-            }
-            else if (FormUser.Password == dbu.Password)
-            {
-                currentUser = FormUser;
-                TempData["User"] = FormUser.Name;
+                HttpContext.Session.SetString("UserID", account.Email.ToString());
+                HttpContext.Session.SetString("UserName", account.Name.ToString());
+                TempData["Name"] = HttpContext.Session.GetString("Name");
+                TempData["Email"] = HttpContext.Session.GetString("Email");
+                TempData["UsePasswordr"] = HttpContext.Session.GetString("Password");
                 return RedirectToAction("HomePage");
             }
-            else
-            {
-                return RedirectToAction("UserLogin");
-            }
+            return View();
         }
+
+        //[HttpPost]
+        //public IActionResult UserLogin(User FormUser)
+        //{
+        //    User dbu = _context.User.ToList().Find(u => u.Email == FormUser.Email);
+
+        //    if (dbu == null)
+        //    {
+        //        ViewBag.Error = "Invalide Email or Password";
+        //        return View();
+        //    }
+        //    else if (FormUser.Password == dbu.Password)
+        //    {
+        //        this.currentUser = dbu;
+        //        TempData["User"] = dbu.Name;
+        //        return RedirectToAction("HomePage");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("UserLogin");
+        //    }
+        //}
 
         public IActionResult Logout()
         {
@@ -88,8 +113,9 @@ namespace HumansInHarmony.Controllers
         }
         public IActionResult DislikeSong(string SongId)
         {
+            User u = new User(TempData.Peek("Name").ToString(), TempData.Peek("Email").ToString(), TempData.Peek("Password").ToString());
             SongInfo song = ItunesDAL.SaveSong(SongId);
-            currentUser.Dislikes.Add(song);
+            u.Dislikes.Add(song);
             db.SaveChanges();
             return RedirectToAction("HomePage");
         }
