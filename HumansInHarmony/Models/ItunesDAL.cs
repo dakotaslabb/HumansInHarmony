@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
@@ -8,22 +9,26 @@ namespace HumansInHarmony.Models
     public class ItunesDAL
     {
 
-        public static SongInfo FindSong(int arrayNumber)
+        public static List<SongInfo> FindSong()
         {
-            
-            string sondId = SongsArray.Songs[arrayNumber];
-            HttpWebRequest request = WebRequest.CreateHttp($"https://itunes.apple.com/search?term={songId}");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            List<SongInfo> songList = new List<SongInfo>();
+            foreach (var songId in SongsArray.Songs)
+            {
 
-            StreamReader rd = new StreamReader(response.GetResponseStream());
+                HttpWebRequest request = WebRequest.CreateHttp($"https://itunes.apple.com/search?term={songId}");
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            string APIText = rd.ReadToEnd();
+                StreamReader rd = new StreamReader(response.GetResponseStream());
 
-            JToken token = JToken.Parse(APIText);
+                string APIText = rd.ReadToEnd();
 
-            SongInfo song = new SongInfo(token);
+                JToken token = JToken.Parse(APIText);
 
-            return song;
+                SongInfo song = new SongInfo(token);
+
+                songList.Add(song);
+            }
+            return songList;
         }
 
         public static SongInfo SaveSong(string Id)
