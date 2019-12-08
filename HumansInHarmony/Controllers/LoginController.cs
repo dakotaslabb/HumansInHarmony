@@ -40,7 +40,7 @@ namespace HumansInHarmony.Controllers
             {
                 TempData["UserName"] = FormUser.Email;
                 ViewBag.Name = FormUser.Email;
-                return RedirectToAction("HomePage");
+                return RedirectToAction("HomePage","HomeController");
             }
             else
             {
