@@ -12,9 +12,8 @@ namespace HumansInHarmony.Models
         public static List<SongInfo> FindSong()
         {
             List<SongInfo> songList = new List<SongInfo>();
-            foreach (var item in SongsArray.Songs)
+            foreach (var songId in SongsArray.Songs)
             {
-                int songId = item;
 
                 HttpWebRequest request = WebRequest.CreateHttp($"https://itunes.apple.com/search?term={songId}");
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();

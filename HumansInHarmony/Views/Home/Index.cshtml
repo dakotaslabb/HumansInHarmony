@@ -1,8 +1,9 @@
 ﻿<h1>Humans In Harmony</h1>
-<a asp-action="HomePage">Random Song</a>
+
+<a asp-action="HomePage">Song</a>
 
 @model HumansInHarmony.Models.User
-<form method="post" asp-action="Register">
+<form method="post" asp-action="Register" asp-controller="Login">
 
     <label asp-for="Name" class="control-label"></label>
     <input asp-for="Name" class="form-control" />

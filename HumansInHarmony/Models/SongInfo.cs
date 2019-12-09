@@ -7,7 +7,7 @@ namespace HumansInHarmony.Models
     public class SongInfo
     {
         [Key]
-        public string TrackId { get; set; }
+        public int TrackId { get; set; }
         public string ArtistName { get; set; }
         public string CollectionName { get; set; }
         public string TrackName { get; set; }
@@ -29,7 +29,7 @@ namespace HumansInHarmony.Models
                 this.TrackName = item["trackName"].ToString();
                 this.PreviewUrl = item["previewUrl"].ToString();
                 this.ArtworkUrl100 = item["artworkUrl100"].ToString();
-                this.TrackId = item["trackId"].ToString();
+                this.TrackId = int.Parse(item["trackId"].ToString());
             }
         }
     }

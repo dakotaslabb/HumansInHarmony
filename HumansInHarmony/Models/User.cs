@@ -10,7 +10,7 @@ namespace HumansInHarmony.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<SongInfo> Likes { get; set; }
-        public List<SongInfo> Dislikes { get; set; }
-     }
+        public List<SongInfo> Likes { get; set; } = new List<SongInfo>();
+        public List<SongInfo> Dislikes { get; set; } = new List<SongInfo>();
+    }
 }

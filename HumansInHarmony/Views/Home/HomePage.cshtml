@@ -1,47 +1,51 @@
 ﻿@model List<SongInfo>
 
+@{
+    ViewData["Title"] = "HomePage";
+}
 
 <h1>HomePage</h1>
+
 @foreach (var item in Model)
 {
     <div>
-        <dl class="row">
+        <h4>SongInfo</h4>
+        <hr />
+        <dl class="row">        
             <dt class="col-sm-2">
                 Artist:
             </dt>
             <dd class="col-sm-10">
-                <span>@Html.DisplayFor(model => item.ArtistName)</span>
+                @Html.DisplayFor(model => item.ArtistName)
             </dd>
             <dt class="col-sm-2">
                 Album:
             </dt>
             <dd class="col-sm-10">
-                <span>@Html.DisplayFor(model => item.CollectionName)</span>
+                @Html.DisplayFor(model => item.CollectionName)
             </dd>
             <dt class="col-sm-2">
                 Song:
             </dt>
             <dd class="col-sm-10">
-                <span>@Html.DisplayFor(model => item.TrackName)</span>
+                @Html.DisplayFor(model => item.TrackName)
             </dd>
             <dt class="col-sm-2">
                 Listen:
             </dt>
             <dd class="col-sm-10">
-                <span><audio src="@Html.DisplayFor(model => item.PreviewUrl)" controls @*autoplay*@></audio></span>
+                <audio src="@Html.DisplayFor(model => item.PreviewUrl)" controls @*autoplay*@></audio>
             </dd>
             <dt class="col-sm-2">
                 Alubm Art:
             </dt>
             <dd class="col-sm-10">
-                <span><img src="@Html.DisplayFor(model => item.ArtworkUrl100)" /></span>
+                <img src="@Html.DisplayFor(model => item.ArtworkUrl100)" />
             </dd>
         </dl>
     </div>
     <div>
-        <span>
-            @Html.ActionLink("Like", "LikeSong", new { id = item.TrackId }) |
-            @Html.ActionLink("Dislike", "DislikeSong", new { id = item.TrackId }) |
-        </span>
+        <a asp-action="LikeSong" asp-controller="Home" asp-route-trackId="@item.TrackId">Like</a>
+        <a asp-action="DislikeSong" asp-controller="Home" asp-route-trackId="@item.TrackId">Dislike</a>
     </div>
 }

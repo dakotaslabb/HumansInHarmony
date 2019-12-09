@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using HumansInHarmony.Models;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
-        public User currentUser;
         public readonly SongContext _context = new SongContext();
         public SongContext db = new SongContext();
         public IActionResult Index()
@@ -21,7 +23,6 @@ namespace HumansInHarmony.Controllers
             List<SongInfo> song = ItunesDAL.FindSong();
             return View(song);
         }
-
         public IActionResult Privacy()
         {
             return View();
@@ -33,64 +34,105 @@ namespace HumansInHarmony.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
-        public IActionResult Register(User FormUser)
+        public IActionResult LikeSong(string trackId)
         {
-            currentUser = FormUser;
-            TempData["User"] = FormUser.Name;
-            db.Add(FormUser);
-            db.SaveChanges();
-            return View(FormUser);
-        }
+            string email = HttpContext.Session.GetString("Email");
 
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        public IActionResult UserLogin()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult UserLogin(User FormUser)
-        {
-            User dbu = _context.User.ToList().Find(u => u.Email == FormUser.Email);
-
-            if (dbu == null)
-            {
-                ViewBag.Error = "Invalide Email or Password";
-                return View();
-            }
-            else if (FormUser.Password == dbu.Password)
-            {
-                currentUser = FormUser;
-                TempData["User"] = FormUser.Name;
-                return RedirectToAction("HomePage");
-            }
-            else
-            {
-                return RedirectToAction("UserLogin");
-            }
-        }
-
-        public IActionResult Logout()
-        {
-            return View();
-        }
-        public IActionResult LikeSong(string SongId)
-        {
-            
-            SongInfo song = ItunesDAL.SaveSong(SongId);
+            User currentUser = _context.User.ToList().Find(u => u.Email == email);
+            SongInfo song = ItunesDAL.SaveSong(trackId);
             currentUser.Likes.Add(song);
-            db.SaveChanges();
+
+            var saved = false;
+            while (!saved)
+            {
+                try
+                {
+                    // Attempt to save changes to the database
+                    db.User.Update(currentUser).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    saved = true;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
+                    {
+                        if (entry.Entity is User)
+                        {
+                            var proposedValues = entry.CurrentValues;
+                            var databaseValues = entry.GetDatabaseValues();
+
+                            foreach (var property in proposedValues.Properties)
+                            {
+                                var proposedValue = proposedValues[property];
+                                var databaseValue = databaseValues[property];
+
+                                // TODO: decide which value should be written to database
+                                // proposedValues[property] = <value to be saved>;
+                            }
+
+                            // Refresh original values to bypass next concurrency check
+                            entry.OriginalValues.SetValues(databaseValues);
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(
+                                "Don't know how to handle concurrency conflicts for "
+                                + entry.Metadata.Name);
+                        }
+                    }
+                }
+            }
             return RedirectToAction("HomePage");
         }
-        public IActionResult DislikeSong(string SongId)
+
+        public IActionResult DislikeSong(string trackId)
         {
-            SongInfo song = ItunesDAL.SaveSong(SongId);
+            string email = HttpContext.Session.GetString("Email");
+
+            User currentUser = _context.User.ToList().Find(u => u.Email == email);
+            SongInfo song = ItunesDAL.SaveSong(trackId);
             currentUser.Dislikes.Add(song);
-            db.SaveChanges();
+
+            var saved = false;
+            while (!saved)
+            {
+                try
+                {
+                    // Attempt to save changes to the database
+                    db.User.Update(currentUser).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    saved = true;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
+                    {
+                        if (entry.Entity is User)
+                        {
+                            var proposedValues = entry.CurrentValues;
+                            var databaseValues = entry.GetDatabaseValues();
+
+                            foreach (var property in proposedValues.Properties)
+                            {
+                                var proposedValue = proposedValues[property];
+                                var databaseValue = databaseValues[property];
+
+                                // TODO: decide which value should be written to database
+                                // proposedValues[property] = <value to be saved>;
+                            }
+
+                            // Refresh original values to bypass next concurrency check
+                            entry.OriginalValues.SetValues(databaseValues);
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(
+                                "Don't know how to handle concurrency conflicts for "
+                                + entry.Metadata.Name);
+                        }
+                    }
+                }
+            }
             return RedirectToAction("HomePage");
         }
     }

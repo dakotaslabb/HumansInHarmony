@@ -2,7 +2,7 @@
 
 namespace HumansInHarmony.Migrations
 {
-    public partial class Dakota2 : Migration
+    public partial class Dakota : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
