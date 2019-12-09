@@ -1,4 +1,4 @@
-﻿@model HumansInHarmony.Models.SongInfo
+﻿@model List<SongInfo>
 
 @{
     ViewData["Title"] = "HomePage";
@@ -6,43 +6,46 @@
 
 <h1>HomePage</h1>
 
-<div>
-    <h4>SongInfo</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            Artist:
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArtistName)
-        </dd>
-        <dt class = "col-sm-2">
-            Album:
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CollectionName)
-        </dd>
-        <dt class = "col-sm-2">
-            Song:
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TrackName)
-        </dd>
-        <dt class = "col-sm-2">
-            Listen:
-        </dt>
-        <dd class = "col-sm-10">
-            <audio src="@Html.DisplayFor(model => model.PreviewUrl)" controls autoplay></audio> 
-        </dd>
-        <dt class = "col-sm-2">
-            Alubm Art:
-        </dt>
-        <dd class = "col-sm-10">
-                <img src="@Html.DisplayFor(model => model.ArtworkUrl100)" />
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Like", "LikeSong", new { id = Model.TrackId }) |
-    @Html.ActionLink("Dislike", "DislikeSong", new { id = Model.TrackId }) |
-</div>
+@foreach (var item in Model)
+{
+    <div>
+        <h4>SongInfo</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Artist:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.ArtistName)
+            </dd>
+            <dt class="col-sm-2">
+                Album:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.CollectionName)
+            </dd>
+            <dt class="col-sm-2">
+                Song:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.TrackName)
+            </dd>
+            <dt class="col-sm-2">
+                Listen:
+            </dt>
+            <dd class="col-sm-10">
+                <audio src="@Html.DisplayFor(model => item.PreviewUrl)" controls @*autoplay*@></audio>
+            </dd>
+            <dt class="col-sm-2">
+                Alubm Art:
+            </dt>
+            <dd class="col-sm-10">
+                <img src="@Html.DisplayFor(model => item.ArtworkUrl100)" />
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.ActionLink("Like", "LikeSong", "HomeController", new { id = item.TrackId }) |
+        @Html.ActionLink("Dislike", "DislikeSong", "HomeController", new { id = item.TrackId }) |
+    </div>
+}
