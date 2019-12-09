@@ -10,10 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumansInHarmony.Migrations
 {
     [DbContext(typeof(SongContext))]
-    [Migration("20191206151041_Dakota2")]
-    partial class Dakota2
+    [Migration("20191209213641_Dakota")]
+    partial class Dakota
     {
-        protected override void     BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,8 +23,9 @@ namespace HumansInHarmony.Migrations
 
             modelBuilder.Entity("HumansInHarmony.Models.SongInfo", b =>
                 {
-                    b.Property<string>("TrackId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("TrackId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ArtistName");
 
