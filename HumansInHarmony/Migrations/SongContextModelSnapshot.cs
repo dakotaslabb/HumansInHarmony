@@ -21,8 +21,9 @@ namespace HumansInHarmony.Migrations
 
             modelBuilder.Entity("HumansInHarmony.Models.SongInfo", b =>
                 {
-                    b.Property<string>("TrackId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("TrackId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ArtistName");
 

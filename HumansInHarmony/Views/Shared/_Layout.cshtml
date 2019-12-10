@@ -34,19 +34,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (TempData.Peek("UserName") == null)
+                        @if (TempData.Peek("Email") == null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserLogin">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="UserLogin">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Register">Register</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
                             </li>
                         }
                     </ul>

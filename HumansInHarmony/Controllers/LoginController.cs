@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HumansInHarmony.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HumansInHarmony.Controllers
@@ -9,12 +10,13 @@ namespace HumansInHarmony.Controllers
         public readonly SongContext _context = new SongContext();
         public SongContext db = new SongContext();
         [HttpPost]
-        public IActionResult Register(User u)
+        public IActionResult Register(User FormUser)
         {
-            TempData["UserName"] = u.Email;
-            db.Add(u);
+            HttpContext.Session.SetString("Email", FormUser.Email.ToString());
+            TempData["Email"] = HttpContext.Session.GetString("Email");
+            db.Add(FormUser);
             db.SaveChanges();
-            return View(u);
+            return View(FormUser);
         }
 
         public IActionResult Register()
@@ -29,18 +31,17 @@ namespace HumansInHarmony.Controllers
         [HttpPost]
         public IActionResult UserLogin(User FormUser)
         {
-            User dbu = _context.User.ToList().Find(u => u.Email == FormUser.Email);
-
-            if (dbu == null)
+            User currentUser = _context.User.ToList().Find(u => u.Email == FormUser.Email);
+            if (currentUser == null)
             {
                 ViewBag.Error = "Invalide Email or Password";
                 return View();
             }
-            else if (FormUser.Password == dbu.Password)
+            else if (FormUser.Password == currentUser.Password)
             {
-                TempData["UserName"] = FormUser.Email;
-                ViewBag.Name = FormUser.Email;
-                return RedirectToAction("HomePage","HomeController");
+                HttpContext.Session.SetString("Email", FormUser.Email.ToString());
+                TempData["Email"] = HttpContext.Session.GetString("Email");
+                return RedirectToAction("HomePage", "Home");
             }
             else
             {
@@ -50,6 +51,7 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult Logout()
         {
+            HttpContext.Session.Clear();
             return View();
         }
 

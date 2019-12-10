@@ -11,7 +11,7 @@
     <div>
         <h4>SongInfo</h4>
         <hr />
-        <dl class="row">
+        <dl class="row">        
             <dt class="col-sm-2">
                 Artist:
             </dt>
@@ -45,7 +45,7 @@
         </dl>
     </div>
     <div>
-        @Html.ActionLink("Like", "LikeSong", "HomeController", new { id = item.TrackId }) |
-        @Html.ActionLink("Dislike", "DislikeSong", "HomeController", new { id = item.TrackId }) |
+        <a asp-action="LikeSong" asp-controller="Home" asp-route-trackId="@item.TrackId">Like</a>
+        <a asp-action="DislikeSong" asp-controller="Home" asp-route-trackId="@item.TrackId">Dislike</a>
     </div>
 }
