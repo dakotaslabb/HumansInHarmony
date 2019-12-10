@@ -19,9 +19,9 @@ namespace HumansInHarmony.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("HumansInHarmony.Models.SongInfo", b =>
+            modelBuilder.Entity("HumansInHarmony.Models.DislikedSongs", b =>
                 {
-                    b.Property<int>("TrackId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -33,17 +33,65 @@ namespace HumansInHarmony.Migrations
 
                     b.Property<string>("PreviewUrl");
 
+                    b.Property<int>("TrackId");
+
                     b.Property<string>("TrackName");
 
                     b.Property<int?>("UserId");
 
-                    b.Property<int?>("UserId1");
-
-                    b.HasKey("TrackId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserId1");
+                    b.ToTable("DislikedSongs");
+                });
+
+            modelBuilder.Entity("HumansInHarmony.Models.LikedSongs", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ArtistName");
+
+                    b.Property<string>("ArtworkUrl100");
+
+                    b.Property<string>("CollectionName");
+
+                    b.Property<string>("PreviewUrl");
+
+                    b.Property<int>("TrackId");
+
+                    b.Property<string>("TrackName");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LikedSongs");
+                });
+
+            modelBuilder.Entity("HumansInHarmony.Models.SongInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ArtistName");
+
+                    b.Property<string>("ArtworkUrl100");
+
+                    b.Property<string>("CollectionName");
+
+                    b.Property<string>("PreviewUrl");
+
+                    b.Property<int>("TrackId");
+
+                    b.Property<string>("TrackName");
+
+                    b.HasKey("Id");
 
                     b.ToTable("SongInfo");
                 });
@@ -65,15 +113,18 @@ namespace HumansInHarmony.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("HumansInHarmony.Models.SongInfo", b =>
+            modelBuilder.Entity("HumansInHarmony.Models.DislikedSongs", b =>
                 {
                     b.HasOne("HumansInHarmony.Models.User")
                         .WithMany("Dislikes")
                         .HasForeignKey("UserId");
+                });
 
+            modelBuilder.Entity("HumansInHarmony.Models.LikedSongs", b =>
+                {
                     b.HasOne("HumansInHarmony.Models.User")
                         .WithMany("Likes")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

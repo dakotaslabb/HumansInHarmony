@@ -54,6 +54,5 @@ namespace HumansInHarmony.Controllers
             HttpContext.Session.Clear();
             return View();
         }
-
     }
 }
