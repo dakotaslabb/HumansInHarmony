@@ -12,7 +12,7 @@ namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
-        public SongContext datebase = new SongContext();
+        public SongContext database = new SongContext();
 
         public IActionResult Index()
         {
@@ -38,8 +38,8 @@ namespace HumansInHarmony.Controllers
         public IActionResult LikeSong(string trackId)
         {
             string email = HttpContext.Session.GetString("Email");
+            User currentUser = database.User.ToList().Find(u => u.Email == email);
 
-            User currentUser = datebase.User.ToList().Find(u => u.Email == email);
             LikedSongs song = ItunesDAL.SaveLike(trackId);
             currentUser.Likes.Add(song);
 
@@ -49,8 +49,8 @@ namespace HumansInHarmony.Controllers
                 try
                 {
                     // Attempt to save changes to the database
-                    datebase.User.Update(currentUser).State = EntityState.Modified;
-                    datebase.SaveChanges();
+                    database.User.Update(currentUser).State = EntityState.Modified;
+                    database.SaveChanges();
                     saved = true;
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -89,8 +89,8 @@ namespace HumansInHarmony.Controllers
         public IActionResult DislikeSong(string trackId)
         {
             string email = HttpContext.Session.GetString("Email");
+            User currentUser = database.User.ToList().Find(u => u.Email == email);
 
-            User currentUser = datebase.User.ToList().Find(u => u.Email == email);
             DislikedSongs song = ItunesDAL.SaveDislike(trackId);
             currentUser.Dislikes.Add(song);
 
@@ -100,8 +100,8 @@ namespace HumansInHarmony.Controllers
                 try
                 {
                     // Attempt to save changes to the database
-                    datebase.User.Update(currentUser).State = EntityState.Modified;
-                    datebase.SaveChanges();
+                    database.User.Update(currentUser).State = EntityState.Modified;
+                    database.SaveChanges();
                     saved = true;
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -137,9 +137,39 @@ namespace HumansInHarmony.Controllers
             return RedirectToAction("HomePage");
         }
 
-        public IActionResult Matches()
+        public IActionResult AllUsers()
         {
-            return View();
+            List<User> allUsers = new List<User>();
+            string email = HttpContext.Session.GetString("Email");
+            var users  = database.User.ToList().Where(u => u.Email != email);
+
+            foreach (var u in users)
+            {
+                allUsers.Add(u);
+            }
+            return View(allUsers);
+        }
+
+        public IActionResult Matches(int Id)
+        {
+            List<LikedSongs> MutualLikes = new List<LikedSongs>();
+
+            string email = HttpContext.Session.GetString("Email");
+            var currentUser = database.User.ToList().Find(u => u.Email == email);
+            var comparedUser = database.User.ToList().Find(u => u.Id == Id);
+
+            foreach (var song in currentUser.Likes)
+            {
+                foreach (var comparedSong in comparedUser.Likes)
+                {
+                    if (song.Id == comparedSong.Id)
+                    {
+                        MutualLikes.Add(song);
+                    }
+
+                }
+            }
+            return View(MutualLikes);
         }
     }
 }

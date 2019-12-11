@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HumansInHarmony.Models.LikedSongs>
+
+@{
+    ViewData["Title"] = "Matches";
+}
+
+<h1>Matches</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TrackId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtistName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CollectionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrackName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreviewUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtworkUrl100)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrackId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArtistName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CollectionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrackName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreviewUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArtworkUrl100)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
