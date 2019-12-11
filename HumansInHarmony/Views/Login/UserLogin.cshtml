@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HumansInHarmony.Models.User>
+﻿@model HumansInHarmony.Models.User
 
 @{
     ViewData["Title"] = "Login";
@@ -6,29 +6,39 @@
 
 <h1>Login</h1>
 
-@ViewBag.Error
 
-<form action="UserLogin" method="post">
-    <table>
-        <tr>
-            <th>
-                Email:<br />
-            <th>
-                <input type="text" name="Email" />
-            </th>
-        </tr>
-        <tr>
-            <th>
-                Password:<br />
-            </th>
-            <th>
-                <input type="password" name="Password" />
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <input type="submit" value="Login" />
-            </th>
-        </tr>
-    </table>
-</form>
+@ViewBag.Error
+@if (TempData.Peek("Email") == null)
+{
+    <form action="UserLogin" method="post">
+        <table>
+            <tr>
+                <th>
+                    Email:<br />
+                <th>
+                    <input type="text" name="Email" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Password:<br />
+                </th>
+                <th>
+                    <input type="password" name="Password" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="submit" value="Login" />
+                </th>
+            </tr>
+        </table>
+    </form>
+}
+else
+{
+    <h1>Welcome back @Model.Name</h1>
+    <div>
+        <a asp-action="HomePage" asp-controller="Home">Start Listening</a>
+    </div>
+}

@@ -37,8 +37,7 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult LikeSong(string trackId)
         {
-            string email = HttpContext.Session.GetString("Email");
-            User currentUser = database.User.ToList().Find(u => u.Email == email);
+            User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
 
             LikedSongs song = ItunesDAL.SaveLike(trackId);
             currentUser.Likes.Add(song);
@@ -88,8 +87,7 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult DislikeSong(string trackId)
         {
-            string email = HttpContext.Session.GetString("Email");
-            User currentUser = database.User.ToList().Find(u => u.Email == email);
+            User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
 
             DislikedSongs song = ItunesDAL.SaveDislike(trackId);
             currentUser.Dislikes.Add(song);
@@ -140,8 +138,7 @@ namespace HumansInHarmony.Controllers
         public IActionResult AllUsers()
         {
             List<User> allUsers = new List<User>();
-            string email = HttpContext.Session.GetString("Email");
-            var users  = database.User.ToList().Where(u => u.Email != email);
+            var users = database.User.ToList().Where(u => u.Email != LoginController.UserEmail);
 
             foreach (var u in users)
             {
@@ -154,19 +151,27 @@ namespace HumansInHarmony.Controllers
         {
             List<LikedSongs> MutualLikes = new List<LikedSongs>();
 
-            string email = HttpContext.Session.GetString("Email");
-            var currentUser = database.User.ToList().Find(u => u.Email == email);
+            var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
             var comparedUser = database.User.ToList().Find(u => u.Id == Id);
 
-            foreach (var song in currentUser.Likes)
+            ViewBag.comparedUser = comparedUser.Name;
+
+            var currentUserLikes = from likedsong in database.LikedSongs
+                                    where likedsong.UserId == currentUser.Id
+                                    select likedsong;
+
+            var comparedUserLikes = from likedsong in database.LikedSongs
+                                     where likedsong.UserId == Id
+                                     select likedsong;
+
+            foreach (LikedSongs song in currentUserLikes)
             {
-                foreach (var comparedSong in comparedUser.Likes)
+                foreach (LikedSongs comparedSong in comparedUserLikes)
                 {
-                    if (song.Id == comparedSong.Id)
+                    if (song.TrackId == comparedSong.TrackId)
                     {
                         MutualLikes.Add(song);
                     }
-
                 }
             }
             return View(MutualLikes);

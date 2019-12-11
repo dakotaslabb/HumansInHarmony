@@ -1,25 +1,45 @@
 ﻿@model HumansInHarmony.Models.User
 
-<h1>Thanks for creating an account with us.</h1>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="HomePage">Start Listening</a>
-</div>
+@if (TempData.Peek("Email") == null)
+{
+
+    <form action="Register" method="post">
+        <table>
+            <tr>
+                <th>
+                    Name:<br />
+                <th>
+                    <input type="text" name="Name" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Email:<br />
+                <th>
+                    <input type="text" name="Email" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Password:<br />
+                </th>
+                <th>
+                    <input type="password" name="Password" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="submit" value="Login" />
+                </th>
+            </tr>
+        </table>
+    </form>
+}
+else
+{
+    <h1>Thanks for creating an account with us @Model.Name</h1>
+    <div>
+        <a asp-action="HomePage" asp-controller="Home">Start Listening</a>
+    </div>
+}   
