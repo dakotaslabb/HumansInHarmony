@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace HumansInHarmony.Models
 {
-    public class SongInfo
+    public class LikedSongs
     {
         [Key]
         public int Id { get; set; }
@@ -14,13 +14,14 @@ namespace HumansInHarmony.Models
         public string TrackName { get; set; }
         public string PreviewUrl { get; set; }
         public string ArtworkUrl100 { get; set; }
+        public int UserId { get; set; }
 
-        public SongInfo()
+        public LikedSongs()
         {
 
         }
 
-        public SongInfo(JToken token)
+        public LikedSongs(JToken token)
         {
             JToken[] Results = token["results"].ToArray();
             foreach (var item in Results)

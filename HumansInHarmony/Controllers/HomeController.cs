@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data.SqlClient;
 
 namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
-        public readonly SongContext _context = new SongContext();
-        public SongContext db = new SongContext();
+        public SongContext database = new SongContext();
+
         public IActionResult Index()
         {
             return View();
@@ -20,8 +21,40 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult HomePage()
         {
-            List<SongInfo> song = ItunesDAL.FindSong();
-            return View(song);
+            List<SongInfo> allSongs = ItunesDAL.FindSong();
+            List<SongInfo> removeSongs = new List<SongInfo>();
+
+            var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
+
+            var currentUserLikes = from likedSong in database.LikedSongs
+                                   where likedSong.UserId == currentUser.Id
+                                   select likedSong;
+            var currentUserDislikes = from dislikedSong in database.DislikedSongs
+                                      where dislikedSong.UserId == currentUser.Id
+                                      select dislikedSong;
+
+            foreach (var song in allSongs)
+            {
+                foreach (var usersLikedSongs in currentUserLikes)
+                {
+                    if (usersLikedSongs.TrackId == song.TrackId)
+                    {
+                        removeSongs.Add(song);
+                    }
+                }
+                foreach (var usersDislikedSongs in currentUserDislikes)
+                {
+                    if (usersDislikedSongs.TrackId == song.TrackId)
+                    {
+                        removeSongs.Add(song);
+                    }
+                }
+            }
+            foreach (var song in removeSongs)
+            {
+                allSongs.Remove(song);
+            }
+            return View(allSongs);
         }
         public IActionResult Privacy()
         {
@@ -36,10 +69,9 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult LikeSong(string trackId)
         {
-            string email = HttpContext.Session.GetString("Email");
+            User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
 
-            User currentUser = _context.User.ToList().Find(u => u.Email == email);
-            SongInfo song = ItunesDAL.SaveSong(trackId);
+            LikedSongs song = ItunesDAL.SaveLike(trackId);
             currentUser.Likes.Add(song);
 
             var saved = false;
@@ -48,8 +80,8 @@ namespace HumansInHarmony.Controllers
                 try
                 {
                     // Attempt to save changes to the database
-                    db.User.Update(currentUser).State = EntityState.Modified;
-                    _context.SaveChanges();
+                    database.User.Update(currentUser).State = EntityState.Modified;
+                    database.SaveChanges();
                     saved = true;
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -87,10 +119,9 @@ namespace HumansInHarmony.Controllers
 
         public IActionResult DislikeSong(string trackId)
         {
-            string email = HttpContext.Session.GetString("Email");
+            User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
 
-            User currentUser = _context.User.ToList().Find(u => u.Email == email);
-            SongInfo song = ItunesDAL.SaveSong(trackId);
+            DislikedSongs song = ItunesDAL.SaveDislike(trackId);
             currentUser.Dislikes.Add(song);
 
             var saved = false;
@@ -99,8 +130,8 @@ namespace HumansInHarmony.Controllers
                 try
                 {
                     // Attempt to save changes to the database
-                    db.User.Update(currentUser).State = EntityState.Modified;
-                    _context.SaveChanges();
+                    database.User.Update(currentUser).State = EntityState.Modified;
+                    database.SaveChanges();
                     saved = true;
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -134,6 +165,48 @@ namespace HumansInHarmony.Controllers
                 }
             }
             return RedirectToAction("HomePage");
+        }
+
+        public IActionResult AllUsers()
+        {
+            List<User> allUsers = new List<User>();
+            var users = database.User.ToList().Where(u => u.Email != LoginController.UserEmail);
+
+            foreach (var u in users)
+            {
+                allUsers.Add(u);
+            }
+            return View(allUsers);
+        }
+
+        public IActionResult Matches(int Id)
+        {
+            List<LikedSongs> MutualLikes = new List<LikedSongs>();
+
+            var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
+            var comparedUser = database.User.ToList().Find(u => u.Id == Id);
+
+            ViewBag.comparedUser = comparedUser.Name;
+
+            var currentUserLikes = from likedsong in database.LikedSongs
+                                   where likedsong.UserId == currentUser.Id
+                                   select likedsong;
+
+            var comparedUserLikes = from likedsong in database.LikedSongs
+                                    where likedsong.UserId == Id
+                                    select likedsong;
+
+            foreach (LikedSongs song in currentUserLikes)
+            {
+                foreach (LikedSongs comparedSong in comparedUserLikes)
+                {
+                    if (song.TrackId == comparedSong.TrackId)
+                    {
+                        MutualLikes.Add(song);
+                    }
+                }
+            }
+            return View(MutualLikes);
         }
     }
 }
