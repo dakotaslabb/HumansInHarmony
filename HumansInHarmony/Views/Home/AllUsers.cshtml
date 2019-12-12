@@ -19,6 +19,7 @@
                 Number of Likes
             </th>
             <th>
+                Compare
             </th>
         </tr>
     </thead>
@@ -29,7 +30,6 @@
             var userLikes = from likedsong in database.LikedSongs
                             where likedsong.UserId == item.Id
                             select likedsong;
-
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
@@ -38,7 +38,9 @@
                     @userLikes.Count()
                 </td>
                 <td>
-                    <a asp-action="Matches" asp-controller="Home" asp-route-Id="@item.Id">Check your matches</a>
+                    <a asp-action="CompareLikes" asp-controller="Home" asp-route-Id="@item.Id">Likes</a><br />
+                    <a asp-action="CompareDislikes" asp-controller="Home" asp-route-Id="@item.Id">Dislikes</a><br />
+                    <a asp-action="ComareLikesToDislikes" asp-controller="Home" asp-route-Id="@item.Id">Likes vs.Dislikes</a>
                 </td>
             </tr>
         }

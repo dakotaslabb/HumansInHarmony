@@ -6,19 +6,16 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Data.SqlClient;
 
 namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
         public SongContext database = new SongContext();
-
         public IActionResult Index()
         {
             return View();
         }
-
         public IActionResult HomePage()
         {
             List<SongInfo> allSongs = ItunesDAL.FindSong();
@@ -60,13 +57,11 @@ namespace HumansInHarmony.Controllers
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
         public IActionResult LikeSong(string trackId)
         {
             User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
@@ -116,7 +111,6 @@ namespace HumansInHarmony.Controllers
             }
             return RedirectToAction("HomePage");
         }
-
         public IActionResult DislikeSong(string trackId)
         {
             User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
@@ -166,7 +160,6 @@ namespace HumansInHarmony.Controllers
             }
             return RedirectToAction("HomePage");
         }
-
         public IActionResult AllUsers()
         {
             List<User> allUsers = new List<User>();
@@ -178,8 +171,7 @@ namespace HumansInHarmony.Controllers
             }
             return View(allUsers);
         }
-
-        public IActionResult Matches(int Id)
+        public IActionResult CompareLikes(int Id)
         {
             List<LikedSongs> MutualLikes = new List<LikedSongs>();
 
@@ -207,6 +199,64 @@ namespace HumansInHarmony.Controllers
                 }
             }
             return View(MutualLikes);
+        }
+        public IActionResult CompareDislikes(int Id)
+        {
+            List<DislikedSongs> MutalDislikes = new List<DislikedSongs>();
+
+            var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
+            var comparedUser = database.User.ToList().Find(u => u.Id == Id);
+
+            ViewBag.comparedUser = comparedUser.Name;
+
+            var currentUserLikes = from dislikeSongs in database.DislikedSongs
+                                   where dislikeSongs.UserId == currentUser.Id
+                                   select dislikeSongs;
+
+            var comparedUserLikes = from dislikeSongs in database.DislikedSongs
+                                    where dislikeSongs.UserId == Id
+                                    select dislikeSongs;
+
+            foreach (DislikedSongs song in currentUserLikes)
+            {
+                foreach (DislikedSongs comparedSong in comparedUserLikes)
+                {
+                    if (song.TrackId == comparedSong.TrackId)
+                    {
+                        MutalDislikes.Add(song);
+                    }
+                }
+            }
+            return View(MutalDislikes);
+        }
+        public IActionResult ComareLikesToDislikes(int Id)
+        {
+            List<LikedSongs> MutualSongs = new List<LikedSongs>();
+
+            var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
+            var comparedUser = database.User.ToList().Find(u => u.Id == Id);
+
+            ViewBag.comparedUser = comparedUser.Name;
+
+            var currentUserLikes = from likedsongs in database.LikedSongs
+                                   where likedsongs.UserId == currentUser.Id
+                                   select likedsongs;
+
+            var comparedUserDislikes = from dislokedSong in database.DislikedSongs
+                                       where dislokedSong.UserId == Id
+                                       select dislokedSong;
+
+            foreach (var song in currentUserLikes)
+            {
+                foreach (var comparedSong in comparedUserDislikes)
+                {
+                    if (song.TrackId == comparedSong.TrackId)
+                    {
+                        MutualSongs.Add(song);
+                    }
+                }
+            }
+            return View(MutualSongs);
         }
     }
 }
