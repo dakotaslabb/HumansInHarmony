@@ -1,5 +1,6 @@
 ﻿@model HumansInHarmony.Models.User
 
+@TempData["Error"]
 
 @if (TempData.Peek("Email") == null)
 {
@@ -10,14 +11,14 @@
                 <th>
                     Name:<br />
                 <th>
-                    <input type="text" name="Name" />
+                    <input type="text" name="Name" required/>
                 </th>
             </tr>
             <tr>
                 <th>
                     Email:<br />
                 <th>
-                    <input type="text" name="Email" />
+                    <input type="text" name="Email" required/>
                 </th>
             </tr>
             <tr>
@@ -25,12 +26,12 @@
                     Password:<br />
                 </th>
                 <th>
-                    <input type="password" name="Password" />
+                    <input type="password" name="Password" required/>
                 </th>
             </tr>
             <tr>
                 <th>
-                    <input type="submit" value="Login" />
+                    <input type="submit" value="Register" />
                 </th>
             </tr>
         </table>
