@@ -5,9 +5,8 @@
 }
 
 <h1>Login</h1>
+@TempData["ReadError"]
 
-
-@ViewBag.Error
 @if (TempData.Peek("Email") == null)
 {
     <form action="UserLogin" method="post">
