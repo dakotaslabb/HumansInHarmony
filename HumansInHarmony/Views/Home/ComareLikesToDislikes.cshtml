@@ -1,0 +1,46 @@
+﻿@model IEnumerable<HumansInHarmony.Models.LikedSongs>
+
+@{int total = 0;}
+@foreach (var item in Model)
+{
+    total++;
+}
+<h1>You Like all these songs that @ViewBag.comparedUser hates. You should fight them</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Artist
+            </th>
+            <th>
+                Album
+            </th>
+            <th>
+                Track
+            </th>
+            <th>
+                Artwork
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtistName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollectionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackName)
+                </td>
+                <td>
+                    <img src="@Html.DisplayFor(model => item.ArtworkUrl100)" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
