@@ -1,0 +1,45 @@
+﻿@model HumansInHarmony.Models.User
+
+
+@if (TempData.Peek("Email") == null)
+{
+
+    <form action="Register" method="post">
+        <table>
+            <tr>
+                <th>
+                    Name:<br />
+                <th>
+                    <input type="text" name="Name" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Email:<br />
+                <th>
+                    <input type="text" name="Email" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Password:<br />
+                </th>
+                <th>
+                    <input type="password" name="Password" />
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="submit" value="Login" />
+                </th>
+            </tr>
+        </table>
+    </form>
+}
+else
+{
+    <h1>Thanks for creating an account with us @Model.Name</h1>
+    <div>
+        <a asp-action="HomePage" asp-controller="Home">Start Listening</a>
+    </div>
+}   

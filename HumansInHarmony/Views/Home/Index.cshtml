@@ -1,22 +1,6 @@
-﻿<h1>Humans In Harmony</h1>
-<a asp-action="HomePage">Random Song</a>
+﻿<h1>Welcome to Humans In Harmony</h1>
 
-@model HumansInHarmony.Models.User
-<form method="post" asp-action="Result">
-    <p>Name:</p>
-    <label asp-for="Name" class="control-label"></label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-danger"></span>
+<input type="button" value="Login" onclick="location.href='@Url.Action("UserLogin", "Login")'" /> | 
+<input type="button" value="Register" onclick="location.href='@Url.Action("Register", "Login")'" />
 
-    <p>Email:</p>
 
-    <label asp-for="Email" class="control-label"></label>
-    <input asp-for="Email" class="form-control" />
-    <span asp-validation-for="Email" class="text-danger"></span>
-    @*<input type="text" name="UserName" />*@
-
-    <p>Password:</p>
-    <input type="password" name="Password" />
-
-    <input type="submit" />
-</form>

@@ -1,0 +1,6 @@
+﻿@if (TempData.Peek("Email") != null)
+{
+    <p>GoodBye @TempData["Email"]</p>
+}
+
+<a asp-action="UserLogin">Login</a>
