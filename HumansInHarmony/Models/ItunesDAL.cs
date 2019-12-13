@@ -9,26 +9,20 @@ namespace HumansInHarmony.Models
     public class ItunesDAL
     {
 
-        public static List<SongInfo> FindSong()
+        public static SongInfo FindSong(int songId)
         {
-            List<SongInfo> songList = new List<SongInfo>();
-            foreach (var songId in SongsArray.Songs)
-            {
+            HttpWebRequest request = WebRequest.CreateHttp($"https://itunes.apple.com/search?term={songId}");
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-                HttpWebRequest request = WebRequest.CreateHttp($"https://itunes.apple.com/search?term={songId}");
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader rd = new StreamReader(response.GetResponseStream());
 
-                StreamReader rd = new StreamReader(response.GetResponseStream());
+            string APIText = rd.ReadToEnd();
 
-                string APIText = rd.ReadToEnd();
+            JToken token = JToken.Parse(APIText);
 
-                JToken token = JToken.Parse(APIText);
+            SongInfo song = new SongInfo(token);
 
-                SongInfo song = new SongInfo(token);
-
-                songList.Add(song);
-            }
-            return songList;
+            return song;
         }
 
         public static LikedSongs SaveLike(string Id)

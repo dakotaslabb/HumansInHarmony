@@ -30,12 +30,16 @@
             var userLikes = from likedsong in database.LikedSongs
                             where likedsong.UserId == item.Id
                             select likedsong;
+            var userDislikes = from dislikedSong in database.DislikedSongs
+                               where dislikedSong.UserId == item.Id
+                               select dislikedSong; 
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @userLikes.Count()
+                    <p>@item.Name likes @userLikes.Count() songs.</p>
+                    <p>@item.Name dislikes @userDislikes.Count() songs.</p>
                 </td>
                 <td>
                     <a asp-action="CompareLikes" asp-controller="Home" asp-route-Id="@item.Id">Likes</a><br />

@@ -20,15 +20,11 @@ namespace HumansInHarmony.Controllers
             
             if (output == 1)
             {
-                //var BgCheck = Database.User.Contains(FormUser);
-
                 TempData["Error"] = "That user already exists.";
                 return View();
             }
-
             else
             {
-
                 HttpContext.Session.SetString("Email", FormUser.Email.ToString());
                 UserEmail = HttpContext.Session.GetString("Email");
                 TempData["Email"] = HttpContext.Session.GetString("Email");
@@ -41,7 +37,6 @@ namespace HumansInHarmony.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult UserLogin(User FormUser)
         {

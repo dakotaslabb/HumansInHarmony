@@ -18,8 +18,8 @@ namespace HumansInHarmony.Controllers
         }
         public IActionResult HomePage()
         {
-            List<SongInfo> allSongs = ItunesDAL.FindSong();
-            List<SongInfo> removeSongs = new List<SongInfo>();
+            List<int> songIds = new List<int>(SongsArray.Songs);
+            List<int> removeSongs = new List<int>();
 
             var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
 
@@ -30,18 +30,18 @@ namespace HumansInHarmony.Controllers
                                       where dislikedSong.UserId == currentUser.Id
                                       select dislikedSong;
 
-            foreach (var song in allSongs)
+            foreach (var song in songIds)
             {
                 foreach (var usersLikedSongs in currentUserLikes)
                 {
-                    if (usersLikedSongs.TrackId == song.TrackId)
+                    if (usersLikedSongs.TrackId == song)
                     {
                         removeSongs.Add(song);
                     }
                 }
                 foreach (var usersDislikedSongs in currentUserDislikes)
                 {
-                    if (usersDislikedSongs.TrackId == song.TrackId)
+                    if (usersDislikedSongs.TrackId == song)
                     {
                         removeSongs.Add(song);
                     }
@@ -49,10 +49,53 @@ namespace HumansInHarmony.Controllers
             }
             foreach (var song in removeSongs)
             {
-                allSongs.Remove(song);
+                songIds.Remove(song);
             }
-            return View(allSongs);
+            if (songIds.Count() > 0)
+            {
+                SongInfo currentSong = ItunesDAL.FindSong(songIds[0]);
+                return View(currentSong);
+            }
+            return View();
         }
+        //[HttpPost]
+        //public IActionResult ForwardHomePage()
+        //{
+        //    List<SongInfo> allSongs = ItunesDAL.FindSong();
+        //    List<SongInfo> removeSongs = new List<SongInfo>();
+
+        //    var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
+
+        //    var currentUserLikes = from likedSong in database.LikedSongs
+        //                           where likedSong.UserId == currentUser.Id
+        //                           select likedSong;
+        //    var currentUserDislikes = from dislikedSong in database.DislikedSongs
+        //                              where dislikedSong.UserId == currentUser.Id
+        //                              select dislikedSong;
+
+        //    foreach (var song in allSongs)
+        //    {
+        //        foreach (var usersLikedSongs in currentUserLikes)
+        //        {
+        //            if (usersLikedSongs.TrackId == song.TrackId)
+        //            {
+        //                removeSongs.Add(song);
+        //            }
+        //        }
+        //        foreach (var usersDislikedSongs in currentUserDislikes)
+        //        {
+        //            if (usersDislikedSongs.TrackId == song.TrackId)
+        //            {
+        //                removeSongs.Add(song);
+        //            }
+        //        }
+        //    }
+        //    foreach (var song in removeSongs)
+        //    {
+        //        allSongs.Remove(song);
+        //    }
+        //    return View(allSongs);
+        //}
         public IActionResult Privacy()
         {
             return View();
