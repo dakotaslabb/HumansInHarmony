@@ -11,11 +11,13 @@ namespace HumansInHarmony.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-        /* public string Facebook {get; set;}
-         * public string Instagram { get; set; }
-         * public string Twitter { get; set; }
+        public string Facebook { get; set; }
+        public string Instagram { get; set; }
+        public string Twitter { get; set; }
+        public string Snapchat { get; set; }
          
-         */
+
+         
         public List<LikedSongs> Likes { get; set; } = new List<LikedSongs>();
         public List<DislikedSongs> Dislikes { get; set; } = new List<DislikedSongs>();
     }

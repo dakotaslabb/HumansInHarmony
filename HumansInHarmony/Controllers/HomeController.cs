@@ -58,44 +58,6 @@ namespace HumansInHarmony.Controllers
             }
             return View();
         }
-        //[HttpPost]
-        //public IActionResult ForwardHomePage()
-        //{
-        //    List<SongInfo> allSongs = ItunesDAL.FindSong();
-        //    List<SongInfo> removeSongs = new List<SongInfo>();
-
-        //    var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
-
-        //    var currentUserLikes = from likedSong in database.LikedSongs
-        //                           where likedSong.UserId == currentUser.Id
-        //                           select likedSong;
-        //    var currentUserDislikes = from dislikedSong in database.DislikedSongs
-        //                              where dislikedSong.UserId == currentUser.Id
-        //                              select dislikedSong;
-
-        //    foreach (var song in allSongs)
-        //    {
-        //        foreach (var usersLikedSongs in currentUserLikes)
-        //        {
-        //            if (usersLikedSongs.TrackId == song.TrackId)
-        //            {
-        //                removeSongs.Add(song);
-        //            }
-        //        }
-        //        foreach (var usersDislikedSongs in currentUserDislikes)
-        //        {
-        //            if (usersDislikedSongs.TrackId == song.TrackId)
-        //            {
-        //                removeSongs.Add(song);
-        //            }
-        //        }
-        //    }
-        //    foreach (var song in removeSongs)
-        //    {
-        //        allSongs.Remove(song);
-        //    }
-        //    return View(allSongs);
-        //}
         public IActionResult Privacy()
         {
             return View();
@@ -214,6 +176,11 @@ namespace HumansInHarmony.Controllers
             }
             return View(allUsers);
         }
+        public IActionResult ProfilePage(string Email)
+        {
+            var findUser = database.User.ToList().Find(u => u.Email == Email);
+            return View(findUser);
+        }
         public IActionResult CompareLikes(int Id)
         {
             List<LikedSongs> MutualLikes = new List<LikedSongs>();
@@ -222,6 +189,7 @@ namespace HumansInHarmony.Controllers
             var comparedUser = database.User.ToList().Find(u => u.Id == Id);
 
             ViewBag.comparedUser = comparedUser.Name;
+            ViewBag.comparedUserEmail = comparedUser.Email;
 
             var currentUserLikes = from likedsong in database.LikedSongs
                                    where likedsong.UserId == currentUser.Id
@@ -251,6 +219,7 @@ namespace HumansInHarmony.Controllers
             var comparedUser = database.User.ToList().Find(u => u.Id == Id);
 
             ViewBag.comparedUser = comparedUser.Name;
+            ViewBag.comparedUserEmail = comparedUser.Email;
 
             var currentUserLikes = from dislikeSongs in database.DislikedSongs
                                    where dislikeSongs.UserId == currentUser.Id
@@ -280,6 +249,7 @@ namespace HumansInHarmony.Controllers
             var comparedUser = database.User.ToList().Find(u => u.Id == Id);
 
             ViewBag.comparedUser = comparedUser.Name;
+            ViewBag.comparedUserEmail = comparedUser.Email;
 
             var currentUserLikes = from likedsongs in database.LikedSongs
                                    where likedsongs.UserId == currentUser.Id
