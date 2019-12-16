@@ -1,4 +1,4 @@
-﻿@model List<SongInfo>
+﻿@model HumansInHarmony.Models.SongInfo
 @using HumansInHarmony.Controllers;
 @{
     ViewData["Title"] = "HomePage";
@@ -17,56 +17,54 @@
 <p>You like @userLikes.Count() songs and you've dislike like @userDislikes.Count() songs</p>
 
 <h1>HomePage</h1>
-@if (Model.Count() == 0)
-{
-    <p>You Liked all Our Songs!! </p>
-    <p>Check to see if there any onther users with the saem music taste</p>
-    <a asp-action="AllUsers" asp-controller="Home">Check Other Userss</a>
-}
+
+@if (Model == null)
+    {
+        <p>You Liked all Our Songs!! </p>
+        <p>Check to see if there any onther users with the saem music taste</p>
+        <a asp-action="AllUsers" asp-controller="Home">Check Other Userss</a>
+    }
 else
 {
-    @foreach (var item in Model)
-    {
-
-        <div>
-            <h4>SongInfo</h4>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-2">
-                    Artist:
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => item.ArtistName)
-                </dd>
-                <dt class="col-sm-2">
-                    Album:
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => item.CollectionName)
-                </dd>
-                <dt class="col-sm-2">
-                    Song:
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => item.TrackName)
-                </dd>
-                <dt class="col-sm-2">
-                    Listen:
-                </dt>
-                <dd class="col-sm-10">
-                    <audio src="@Html.DisplayFor(model => item.PreviewUrl)" controls @*autoplay*@></audio>
-                </dd>
-                <dt class="col-sm-2">
-                    Alubm Art:
-                </dt>
-                <dd class="col-sm-10">
-                    <img src="@Html.DisplayFor(model => item.ArtworkUrl100)" />
-                </dd>
-            </dl>
-        </div>
-        <div>
-            <a asp-action="LikeSong" asp-controller="Home" asp-route-trackId="@item.TrackId">Like</a>
-            <a asp-action="DislikeSong" asp-controller="Home" asp-route-trackId="@item.TrackId">Dislike</a>
-        </div>
-    }
+<div>
+    <h4>SongInfo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Artist:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArtistName)
+        </dd>
+        <dt class="col-sm-2">
+            Album:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CollectionName)
+        </dd>
+        <dt class="col-sm-2">
+            Song:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrackName)
+        </dd>
+        <dt class="col-sm-2">
+            Listen:
+        </dt>
+        <dd class="col-sm-10">
+            <audio src="@Html.DisplayFor(model => model.PreviewUrl)" controls autoplay></audio>
+        </dd>
+        <dt class="col-sm-2">
+            Alubm Art:
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Html.DisplayFor(model => model.ArtworkUrl100)" />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="LikeSong" asp-controller="Home" asp-route-trackId="@Model.TrackId">Like</a>
+    <a asp-action="DislikeSong" asp-controller="Home" asp-route-trackId="@Model.TrackId">Dislike</a>
+    <a asp-action="HomePage" asp-controller="Home">RaondomSong</a>
+</div>
 }
