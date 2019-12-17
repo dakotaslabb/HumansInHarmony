@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HumansInHarmony.Migrations
 {
-    [DbContext(typeof(SongContext))]
+    [DbContext(typeof(HarmonyContext))]
     [Migration("20191216194913_UserSocialMedia")]
     partial class UserSocialMedia
     {

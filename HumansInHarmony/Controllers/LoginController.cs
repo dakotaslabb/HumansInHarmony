@@ -7,7 +7,7 @@ namespace HumansInHarmony.Controllers
 {
     public class LoginController : Controller
     {
-        SongContext Database = new SongContext();
+        HarmonyContext Database = new HarmonyContext();
         public static string UserEmail = "";
         public IActionResult Register()
         {

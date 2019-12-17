@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HumansInHarmony.Migrations
 {
-    [DbContext(typeof(SongContext))]
+    [DbContext(typeof(HarmonyContext))]
     partial class SongContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
