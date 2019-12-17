@@ -11,7 +11,7 @@ namespace HumansInHarmony.Controllers
 {
     public class HomeController : Controller
     {
-        public SongContext database = new SongContext();
+        public HarmonyContext database = new HarmonyContext();
         public IActionResult Index()
         {
             return View();
@@ -70,9 +70,9 @@ namespace HumansInHarmony.Controllers
         public IActionResult LikeSong(string trackId)
         {
             User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
-
+            
             LikedSongs song = ItunesDAL.SaveLike(trackId);
-            currentUser.Likes.Add(song);
+            currentUser.LikedSongs.Add(song);
 
             var saved = false;
             while (!saved)
@@ -121,7 +121,7 @@ namespace HumansInHarmony.Controllers
             User currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
 
             DislikedSongs song = ItunesDAL.SaveDislike(trackId);
-            currentUser.Dislikes.Add(song);
+            currentUser.DislikedSongs.Add(song);
 
             var saved = false;
             while (!saved)

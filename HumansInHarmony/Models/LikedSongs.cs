@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HumansInHarmony.Models
 {
-    public class LikedSongs
+    public partial class LikedSongs
     {
-        [Key]
         public int Id { get; set; }
         public int TrackId { get; set; }
         public string ArtistName { get; set; }
@@ -14,7 +14,9 @@ namespace HumansInHarmony.Models
         public string TrackName { get; set; }
         public string PreviewUrl { get; set; }
         public string ArtworkUrl100 { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
+
+        public virtual User User { get; set; }
 
         public LikedSongs()
         {

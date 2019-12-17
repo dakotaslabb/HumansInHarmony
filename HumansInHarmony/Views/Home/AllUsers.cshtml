@@ -26,7 +26,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            SongContext database = new SongContext();
+            HarmonyContext database = new HarmonyContext();
             var userLikes = from likedsong in database.LikedSongs
                             where likedsong.UserId == item.Id
                             select likedsong;

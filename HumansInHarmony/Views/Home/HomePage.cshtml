@@ -4,7 +4,7 @@
     ViewData["Title"] = "HomePage";
 }
 @{
-    SongContext database = new SongContext();
+    HarmonyContext database = new HarmonyContext();
     var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
     var userLikes = from likedSongs in database.LikedSongs
                     where likedSongs.UserId == currentUser.Id
