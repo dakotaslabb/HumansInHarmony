@@ -11,22 +11,42 @@
                 <th>
                     Name:<br />
                 <th>
-                    <input type="text" name="Name" required />
+                    <input type="text" name="Name" required pattern="{2,25}" title="Your display name must be between 2-25 characters."/>
                 </th>
             </tr>
             <tr>
                 <th>
                     Email:<br />
                 <th>
-                    <input type="text" name="Email" required />
+                    <input type="text" name="Email" required title="Please enter a valid e-mail address."/>
                 </th>
             </tr>
             <tr>
                 <th>
                     Password:<br />
+                             
                 </th>
                 <th>
-                    <input type="password" name="Password" required />
+                    <input type="password" name="Password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.">>/>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Confirm Password:<br />
+                </th>
+                <th>
+
+                    <input type="password" name="Password_Confirm" id="password" oninput="check(this)" required  />
+                    <script language='javascript' type='text/javascript'>
+             function check(input) {
+             if (input.value != document.getElementById('password').value) {
+             input.setCustomValidity('Passwords must match.');
+        } else {
+                 // input is valid -- reset the error message
+                 input.setCustomValidity('');
+        }
+    }
+                    </script>
                 </th>
             </tr>
             <tr>
@@ -39,11 +59,11 @@
             </tr>
             <tr>
                 <th>
-                    
+
                     <p>Copy and paste the link to your Facebook profile page.</p>
                 </th>
                 <th>
-                    <input type="url" name="Facebook" required />
+                    <input type="url" name="Facebook" />
                 </th>
             </tr>
             <tr>
@@ -51,7 +71,7 @@
                     <p>Insert your Instagram username:</p>
                 </th>
                 <th>
-                    <input type="text" name="Instagram" required />
+                    <input type="text" name="Instagram" />
                 </th>
             </tr>
             <tr>
@@ -59,7 +79,7 @@
                     <p>Insert your Twitter handle:</p>
                 </th>
                 <th>
-                    <input type="text" name="Twitter" required />
+                    <input type="text" name="Twitter" />
                 </th>
             </tr>
 
@@ -68,7 +88,7 @@
                     <p>Insert your Snapchat username:</p>
                 </th>
                 <th>
-                    <input type="text" name="Twitter" required />
+                    <input type="text" name="Snapchat" />
                 </th>
             </tr>
 

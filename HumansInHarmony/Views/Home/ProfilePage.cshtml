@@ -7,49 +7,48 @@
 <h1>ProfilePage</h1>
 
 <div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
+    
+        <h1>@Model.Name</h1>
+        <p>
+             <a href="@Model.Facebook" target="_blank"><img src="https://p7.hiclipart.com/preview/136/802/422/facebook-computer-icons-logo-facebook-icon.jpg" width="25" height="25" target="_blank"></a><br />
+        </p>
+        <p>
+            <a href="http://www.Instagram.com/@Model.Instagram" target="_blank"><img src="https://i7.pngguru.com/preview/302/917/287/computer-icons-social-media-instagram.jpg" width="25" height="25" target="_blank"></a><br />
+        </p>
+        <p>
+            <a href="http://www.Twitter.com/@Model.Twitter" target="_blank"><img src="https://icon-library.net/images/black-twitter-icon-transparent-background/black-twitter-icon-transparent-background-21.jpg" width="25" height="25" target="_blank"></a><br />
+        </p>
+        <p>
+            <a href="http://www.Twitter.com/@Model.Snapchat" target="_blank"><img src="http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c53e.png" width="25" height="25"></a><br />
+        </p>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Facebook)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Facebook)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Instagram)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Instagram)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Twitter)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Twitter)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Snapchat)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Snapchat)
         </dd>
     </dl>
