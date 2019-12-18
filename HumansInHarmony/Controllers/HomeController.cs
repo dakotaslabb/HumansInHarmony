@@ -165,6 +165,25 @@ namespace HumansInHarmony.Controllers
             }
             return RedirectToAction("HomePage");
         }
+        public IActionResult UserProfile()
+        {
+            var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
+            return View(currentUser);
+        }
+        public IActionResult EditProfile(int id)
+        {
+            var currentUser = database.User.ToList().Find(u => u.Id == id);
+            return View(currentUser);
+        }
+        public IActionResult UpdateProfile(User updateUser)
+        {
+            var currentUser = database.User.ToList().Find(u => u.Email == LoginController.UserEmail);
+            database.User.Remove(currentUser);
+            currentUser = updateUser;
+            database.User.Update(currentUser);
+            database.SaveChanges();
+            return RedirectToAction("UserProfile");
+        }
         public IActionResult AllUsers()
         {
             List<User> allUsers = new List<User>();
