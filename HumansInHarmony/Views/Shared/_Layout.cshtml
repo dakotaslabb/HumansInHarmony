@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HumansInHarmony</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico"/>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
@@ -18,7 +19,8 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-bottom"
+         
         <div class="container">
             <a class="navbar-brand" href="#">Humans In Harmony</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><img src="http://www.newdesignfile.com/postpic/2010/03/home-icon-white_338306.png" alt="Home" height="50"></a>
                     </li>
                     @if (TempData.Peek("Email") == null)
                     {
@@ -40,12 +42,15 @@
                     }
                     else
                     {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AllUsers"><img src="http://pluspng.com/img-png/png-hd-magnifying-glass-a-simple-magnifying-glass-2400.png" alt="Likes vs. Dislikes" height="50"></a>
+                </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="UserProfile">Profile</a>
-                        </li>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="HomePage"><img src="https://www.freepnglogos.com/uploads/play-button-png/index-media-cover-art-play-button-overlay-5.png" alt="Start Listening" height="50"></a></li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AllUsers">Find Friends</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="UserProfile"><img src="https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png" alt="UserProfile" height="50"></a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
                         </li>

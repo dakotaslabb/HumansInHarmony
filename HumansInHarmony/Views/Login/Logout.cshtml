@@ -2,5 +2,23 @@
 {
     <p>GoodBye @TempData["Email"]</p>
 }
-
-<a asp-action="UserLogin">Login</a>
+<style>
+    body {
+            text-align: center;
+            color: white;
+            font-size: 20px;
+        }
+    .content {
+        max-width: 500px;
+        margin: auto;
+    }
+</style>
+<body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
+    <div class="content">
+        <br /><br />
+        <h1>You've been logged out. Thank you for contributing to Humans in Harmony.</h1>
+        <a asp-action="UserLogin"><h1>Login</h1></a>
+        <a asp-action="Home"><img src="http://www.newdesignfile.com/postpic/2010/03/home-icon-white_338306.png" alt="Home" height="50"></a>
+        
+    </div>
+</body>
