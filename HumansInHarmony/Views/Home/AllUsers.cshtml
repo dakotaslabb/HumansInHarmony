@@ -3,47 +3,80 @@
 @{
     ViewData["Title"] = "AllUsers";
 }
-
-<h1>Find Your Self A Friend</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                Number of Likes
-            </th>
-            <th>
-                Compare
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            HarmonyContext database = new HarmonyContext();
-            var userLikes = from likedsong in database.LikedSongs
-                            where likedsong.UserId == item.Id
-                            select likedsong;
-            var userDislikes = from dislikedSong in database.DislikedSongs
-                               where dislikedSong.UserId == item.Id
-                               select dislikedSong; 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <p>@item.Name likes @userLikes.Count() songs.</p>
-                    <p>@item.Name dislikes @userDislikes.Count() songs.</p>
-                </td>
-                <td>
-                    <a asp-action="CompareLikes" asp-controller="Home" asp-route-Id="@item.Id">Likes</a><br />
-                    <a asp-action="CompareDislikes" asp-controller="Home" asp-route-Id="@item.Id">Dislikes</a><br />
-                    <a asp-action="ComareLikesToDislikes" asp-controller="Home" asp-route-Id="@item.Id">Likes vs.Dislikes</a>
-                </td>
-            </tr>
+    <style>
+        
+        body {
+            text-align: center;
+            color: white;
+            font-size: 20px;
         }
-    </tbody>
-</table>
+        .content {
+            max-width: 500px;
+            margin: auto;
+        }
+        .table{
+            color:white;
+            font-size: 20px;
+        }
+    </style>
+    <body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
+        <div class="content">
+            <h1>Explore other Humans seeking Harmony</h1>
+            <br />
+     
+            <a><img src="https://www.getpose.com/wp-content/uploads/2017/08/heart-png-15.png" alt="Likes" height="50"></a>
+            <br /><br />
+            <p>Good vibes only. These are the tracks you both enjoy!</p>
+            <a><img src="https://www.onlygfx.com/wp-content/uploads/2018/04/hipster-with-sunglasses-silhouette-vol-2-5.png" alt="Dislikes" height="50"></a>
+            <br /><br />
+            <p>Hipster Mode! Bond over those songs you just can't stand.</p>
+            <a><img src="http://pluspng.com/img-png/png-hd-magnifying-glass-a-simple-magnifying-glass-2400.png" alt="Likes vs. Dislikes" height="50"></a>
+            <br /><br />
+            <p>Explore Likes & Dislikes</p>
+
+
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            Number of Likes
+                        </th>
+                        <th>
+                            Compare
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        HarmonyContext database = new HarmonyContext();
+                        var userLikes = from likedsong in database.LikedSongs
+                                        where likedsong.UserId == item.Id
+                                        select likedsong;
+                        var userDislikes = from dislikedSong in database.DislikedSongs
+                                           where dislikedSong.UserId == item.Id
+                                           select dislikedSong;
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <p>Liked: @userLikes.Count() songs</p>
+                                <p>Disliked: @userDislikes.Count() songs</p>
+                            </td>
+                            <td>
+                                <a asp-action="CompareLikes" asp-controller="Home" asp-route-Id="@item.Id"><img src="https://www.getpose.com/wp-content/uploads/2017/08/heart-png-15.png" alt="Likes" height="50"></a><br /><br />
+                                <a asp-action="CompareDislikes" asp-controller="Home" asp-route-Id="@item.Id"><img src="https://www.onlygfx.com/wp-content/uploads/2018/04/hipster-with-sunglasses-silhouette-vol-2-5.png" alt="Dislikes" height="50"></a><br /><br />
+                                <a asp-action="ComareLikesToDislikes" asp-controller="Home" asp-route-Id="@item.Id"><img src="http://pluspng.com/img-png/png-hd-magnifying-glass-a-simple-magnifying-glass-2400.png" alt="Likes vs. Dislikes" height="50"></a><br />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </body>

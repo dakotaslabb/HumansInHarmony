@@ -5,105 +5,123 @@
 @if (TempData.Peek("Email") == null)
 {
 
-    <form action="Register" method="post">
-        <table>
-            <tr>
-                <th>
-                    Name:<br />
-                <th>
-                    <input type="text" name="Name" required pattern="{2,25}" title="Your display name must be between 2-25 characters."/>
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Email:<br />
-                <th>
-                    <input type="text" name="Email" required title="Please enter a valid e-mail address."/>
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Password:<br />
-                             
-                </th>
-                <th>
-                    <input type="password" name="Password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.">>/>
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Confirm Password:<br />
-                </th>
-                <th>
-
-                    <input type="password" name="Password_Confirm" id="password" oninput="check(this)" required  />
-                    <script language='javascript' type='text/javascript'>
-             function check(input) {
-             if (input.value != document.getElementById('password').value) {
-             input.setCustomValidity('Passwords must match.');
-        } else {
-                 // input is valid -- reset the error message
-                 input.setCustomValidity('');
+    <style>
+        body {
+            text-align: center;
+            color: white;
+            font-size: 20px;
         }
-    }
-                    </script>
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <br />
-                    <br />
-                    <br />
-                    <h1>Enter your social media links below to allow other users to contact you. The following information is optional.</h1>
-                </th>
-            </tr>
-            <tr>
-                <th>
+        .content {
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
 
-                    <p>Copy and paste the link to your Facebook profile page.</p>
-                </th>
-                <th>
-                    <input type="url" name="Facebook" />
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <p>Insert your Instagram username:</p>
-                </th>
-                <th>
-                    <input type="text" name="Instagram" />
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <p>Insert your Twitter handle:</p>
-                </th>
-                <th>
-                    <input type="text" name="Twitter" />
-                </th>
-            </tr>
+    <body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
+        <div class="content">
+            <form action="Register" method="post">
+                <table>
+                    <tr>
+                        <th>
+                            Name:<br />
+                        <th>
+                            <input type="text" name="Name" id="Name" required pattern="{2,25}" title="Your display name must be between 2-25 characters." />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Email:<br />
+                        <th>
+                            <input type="text" name="Email" required title="Please enter a valid e-mail address." />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Password:<br />
 
-            <tr>
-                <th>
-                    <p>Insert your Snapchat username:</p>
-                </th>
-                <th>
-                    <input type="text" name="Snapchat" />
-                </th>
-            </tr>
+                        </th>
+                        <th>
+                            <input type="password" name="Password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.">>/>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Confirm Password:<br />
+                        </th>
+                        <th>
 
-            <tr>
-                <th>
-                    <input type="submit" value="Register" />
-                </th>
-            </tr>
-        </table>
-    </form>
+                            <input type="password" name="Password_Confirm" id="password" oninput="check(this)" required />
+                            <script language='javascript' type='text/javascript'>
+                                function check(input) {
+                                    if (input.value != document.getElementById('password').value) {
+                                        input.setCustomValidity('Passwords must match.');
+                                    } else {
+                                        // input is valid -- reset the error message
+                                        input.setCustomValidity('');
+                                    }
+                                }
+                            </script>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <br />
+                            <br />
+                            <br />
+                            <h1>Enter your social media links below to allow other users to contact you. The following information is optional.</h1>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+
+                            <p>Copy and paste the link to your Facebook profile page.</p>
+                        </th>
+                        <th>
+                            <input type="url" name="Facebook" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <p>Insert your Instagram username:</p>
+                        </th>
+                        <th>
+                            <input type="text" name="Instagram" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <p>Insert your Twitter handle:</p>
+                        </th>
+                        <th>
+                            <input type="text" name="Twitter" />
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <p>Insert your Snapchat username:</p>
+                        </th>
+                        <th>
+                            <input type="text" name="Snapchat" />
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <input type="submit" value="Register" />
+                        </th>
+                    </tr>
+                </table>
+            </form>
+            }
+            else
+            {
+
+            @*<h1>Thank you for creating an account with us @Model.Name! Happy listening.</h1>*@
+            <div>
+                <a asp-action="HomePage" asp-controller="Home"><img src="https://www.freepnglogos.com/uploads/play-button-png/index-media-cover-art-play-button-overlay-5.png" alt="Start Listening" height="50"></a>
+            </div>
+
+            </div>
+    </body>
 }
-else
-{
-    <h1>Thanks for creating an account with us @Model.Name</h1>
-    <div>
-        <a asp-action="HomePage" asp-controller="Home">Start Listening</a>
-    </div>
-}   

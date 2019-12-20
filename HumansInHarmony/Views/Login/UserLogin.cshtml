@@ -3,41 +3,80 @@
 @{
     ViewData["Title"] = "Login";
 }
+<style>
+    body {
+            text-align: center;
+            color: white;
+    font-size:20px;
+        }
+        
+    .content {
+        max-width: 500px;
+        margin: auto;
+    }
+</style>
+<body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
+    <div class="content">
+        
 
-<h1>Login</h1>
-@TempData["ReadError"]
+        @*<h1>Login</h1>*@
+        @TempData["ReadError"]
 
-@if (TempData.Peek("Email") == null)
+        @if (TempData.Peek("Email") == null)
+        
 {
-    <form action="UserLogin" method="post">
-        <table>
-            <tr>
-                <th>
-                    Email:<br />
-                <th>
-                    <input type="text" name="Email" required />
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Password:<br />
-                </th>
-                <th>
-                    <input type="password" name="Password" required />
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <input type="submit" value="Login" />
-                </th>
-            </tr>
-        </table>
-    </form>
-}
-else
-{
-    <h1>Welcome back @Model.Name</h1>
-    <div>
-        <a asp-action="HomePage" asp-controller="Home">Start Listening</a>
+        <br />
+        <h1>User Login</h1>
+
+        <form action="UserLogin" method="post">
+            <br />
+            <br />
+
+            <table>
+                <tr>
+                    <th>
+                        <center>Email:<br /></center>
+                    <th>
+                        <center><input type="text" name="Email" required /></center>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <center>Password:<br /></center>
+                    </th>
+                    <th>
+                        <center><input type="password" name="Password" required /></center>
+                    </th>
+                </tr>
+
+
+
+
+            </table>
+            <input type="submit" value="Login" />
+        </form>
+    }
+    else
+    {
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <center><h1>Welcome back @Model.Name! Let's get to listening.</h1></center>
+        <div>
+            <a asp-action="HomePage" asp-controller="Home"><img src="https://www.freepnglogos.com/uploads/play-button-png/index-media-cover-art-play-button-overlay-5.png" alt="Start Listening" height="50"></a>
+            <br />
+
+            <br />
+
+
+        </div>
+
+    }
+        
     </div>
-}
+</body>

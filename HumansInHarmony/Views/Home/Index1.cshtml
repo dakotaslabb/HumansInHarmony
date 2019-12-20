@@ -1,9 +1,0 @@
-﻿<h1>Welcome to Humans In Harmony</h1>
-
-@if (TempData.Peek("Email") == null)
-{
-    <input type="button" value="Login" onclick="location.href='@Url.Action("UserLogin", "Login")'" />
-    <input type="button" value="Register" onclick="location.href='@Url.Action("Register", "Login")'" />
-}
-
-
