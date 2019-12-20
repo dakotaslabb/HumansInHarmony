@@ -5,45 +5,66 @@
 {
     total++;
 }
-<h1>You Like all these songs that @ViewBag.comparedUser hates. You should fight them</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Artist
-            </th>
-            <th>
-                Album
-            </th>
-            <th>
-                Track
-            </th>
-            <th>
-                Artwork
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ArtistName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CollectionName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrackName)
-                </td>
-                <td>
-                    <img src="@Html.DisplayFor(model => item.ArtworkUrl100)" />
-                </td>
-            </tr>
-        }
-    </tbody>
-    
-</table>
 
-<a asp-action="ProfilePage" asp-controller="Home" asp-route-Email ="@ViewBag.comparedUserEmail">Profile Page</a>
+<style>
+    body {
+            text-align: center;
+            color: white;
+            font-size: 20px;
+        }
+        .content {
+            max-width: 500px;
+            margin: auto;
+        }
+        .table{
+            color:white;
+            font-size: 20px;
+        }
+</style>
+<body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
+    <div class="content">
+        <h1>Ah yes, your musical nemesis! Your appreciation for these songs overcomes @ViewBag.comparedUser 's dislike for them. Maybe.</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Artist
+                    </th>
+                    <th>
+                        Album
+                    </th>
+                    <th>
+                        Track
+                    </th>
+                    <th>
+                        Artwork
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ArtistName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CollectionName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrackName)
+                        </td>
+                        <td>
+                            <img src="@Html.DisplayFor(model => item.ArtworkUrl100)" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        
+        <a asp-action="ProfilePage" asp-controller="Home" asp-route-Email="@ViewBag.comparedUserEmail"><img src="https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png" alt="UserProfile" height="50"></a><br /><br />
+    </div>
+</body>
+

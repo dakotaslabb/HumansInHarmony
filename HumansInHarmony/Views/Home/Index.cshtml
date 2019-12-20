@@ -1,35 +1,39 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-<head>
+@*<head>
+
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>The Big Picture - Start Bootstrap Template</title>
 
-    <!-- Bootstrap core CSS -->
+     Bootstrap core CSS 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+     Custom styles for this template 
     <link href="css/the-big-picture.css" rel="stylesheet">
 
-</head>
+</head>*@
 
-<body>
-    background: url('http://placehold.it/1920x1080') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
+
+<body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
+
+
     <section>
+        
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <h1 class="mt-5">The Big Picture</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt voluptates rerum eveniet sapiente repellat esse, doloremque quod recusandae deleniti nostrum assumenda vel beatae sed aut modi nesciunt porro quisquam voluptatem.</p>
+                    <h1 class="mt-5"><strong><font family="century gothic" size="300" color="white">Humans in Harmony</font></strong></h1>
+                    <p><font size="10" family="century gothic" color="white">Where humans seeking humans can connect based on musical compatibility.</font></p>
+                    @if (TempData.Peek("Email") == null)
+                    {
+                        <input type="button" value="Login" onclick="location.href='@Url.Action("UserLogin", "Login")'" />
+                        <input type="button" value="Register" onclick="location.href='@Url.Action("Register", "Login")'" />
+                    }
                 </div>
             </div>
         </div>
@@ -39,6 +43,7 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+
 </body>
 
-</html
+</html> 
