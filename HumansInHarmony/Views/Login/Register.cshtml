@@ -2,22 +2,22 @@
 
 @TempData["Error"]
 
-@if (TempData.Peek("Email") == null)
-{
+<body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
+    @if (TempData.Peek("Email") == null)
+    {
+        <style>
+            body {
+                text-align: center;
+                color: white;
+                font-size: 20px;
+            }
 
-    <style>
-        body {
-            text-align: center;
-            color: white;
-            font-size: 20px;
-        }
-        .content {
-            max-width: 500px;
-            margin: auto;
-        }
-    </style>
+            .content {
+                max-width: 500px;
+                margin: auto;
+            }
+        </style>
 
-    <body style="background-image:url(https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-1.2.1&w=1000&q=80); background-size:cover ">
         <div class="content">
             <form action="Register" method="post">
                 <table>
@@ -41,7 +41,7 @@
 
                         </th>
                         <th>
-                            <input type="password" name="Password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.">>/>
+                            <input type="password" name="Password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.">
                         </th>
                     </tr>
                     <tr>
@@ -68,7 +68,7 @@
                             <br />
                             <br />
                             <br />
-                            <h1>Enter your social media links below to allow other users to contact you. The following information is optional.</h1>
+                            <p>Enter your social media links below to allow other users to contact you. The following information is optional.</p>
                         </th>
                     </tr>
                     <tr>
@@ -113,15 +113,26 @@
                     </tr>
                 </table>
             </form>
-            }
-            else
-            {
+        </div>
+    }
+    else
+    {
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-            @*<h1>Thank you for creating an account with us @Model.Name! Happy listening.</h1>*@
-            <div>
-                <a asp-action="HomePage" asp-controller="Home"><img src="https://www.freepnglogos.com/uploads/play-button-png/index-media-cover-art-play-button-overlay-5.png" alt="Start Listening" height="50"></a>
-            </div>
+        <center><h1>Welcome @Model.Name! Let's get to listening.</h1></center>
+        <div>
+            <a asp-action="HomePage" asp-controller="Home"><img src="https://www.freepnglogos.com/uploads/play-button-png/index-media-cover-art-play-button-overlay-5.png" alt="Start Listening" height="50"></a>
+            <br />
 
-            </div>
-    </body>
-}
+            <br />
+
+
+        </div>
+    }
+</body>
